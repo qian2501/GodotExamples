@@ -1,0 +1,75 @@
+[gd_scene load_steps=13 format=3 uid="uid://coi8axcx20sty"]
+
+[ext_resource type="Script" uid="uid://bxaut2praapl7" path="res://CharacterBody2d.cs" id="1_5um6x"]
+[ext_resource type="Script" uid="uid://b4g4xl4sjbn68" path="res://Grass.cs" id="1_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://s46i7nhli13t" path="res://icon.svg" id="1_nu38a"]
+[ext_resource type="Texture2D" uid="uid://dhqeskrynqxcc" path="res://GrassTexture.png" id="2_qndc6"]
+[ext_resource type="Script" uid="uid://cjhq6ha7uuxf1" path="res://Grass2.cs" id="3_3dxm6"]
+[ext_resource type="Shader" uid="uid://hp5gyh8bm8xn" path="res://Main.gdshader" id="5_3dxm6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0oyg5"]
+size = Vector2(22, 13)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trn2v"]
+shader = ExtResource("5_3dxm6")
+shader_parameter/frameCount = Vector2(6, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_cm0pq"]
+size = Vector2(14, -14)
+
+[sub_resource type="MultiMesh" id="MultiMesh_fos0i"]
+use_custom_data = true
+mesh = SubResource("QuadMesh_cm0pq")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgr22"]
+size = Vector2(160, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mxyc"]
+size = Vector2(12.6667, 12.6667)
+
+[node name="Main" type="Node2D"]
+
+[node name="Grass" type="Area2D" parent="."]
+visible = false
+position = Vector2(109, 18)
+scale = Vector2(4, 4)
+script = ExtResource("1_cm0pq")
+
+[node name="Grass" type="Sprite2D" parent="Grass"]
+position = Vector2(0, -5)
+texture = ExtResource("2_qndc6")
+hframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grass"]
+shape = SubResource("RectangleShape2D_0oyg5")
+
+[node name="Grass2" type="Area2D" parent="."]
+scale = Vector2(4, 4)
+script = ExtResource("3_3dxm6")
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="Grass2"]
+material = SubResource("ShaderMaterial_trn2v")
+multimesh = SubResource("MultiMesh_fos0i")
+texture = ExtResource("2_qndc6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grass2"]
+shape = SubResource("RectangleShape2D_lgr22")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+scale = Vector2(3, 3)
+script = ExtResource("1_5um6x")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="Icon" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_nu38a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-1.58946e-07, -1.58946e-07)
+shape = SubResource("RectangleShape2D_5mxyc")
+
+[connection signal="body_entered" from="Grass" to="Grass" method="HandleBodyEnter"]
+[connection signal="body_exited" from="Grass" to="Grass" method="HandleBodyExit"]
+[connection signal="body_entered" from="Grass2" to="Grass2" method="HandleBodyEnter"]
+[connection signal="body_exited" from="Grass2" to="Grass2" method="HandleBodyExit"]
