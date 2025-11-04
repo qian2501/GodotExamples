@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://y0osfsa7bonw"]
+
+[ext_resource type="Texture2D" uid="uid://bcrpy86ntnca0" path="res://icon.svg" id="1_f5gsx"]
+[ext_resource type="Shader" uid="uid://b5vvilyp37olo" path="res://Box.gdshader" id="2_87s4r"]
+[ext_resource type="Shader" uid="uid://c2n34aoqecn8r" path="res://Gaussian.gdshader" id="2_p41he"]
+
+[sub_resource type="Environment" id="Environment_r0du0"]
+background_mode = 3
+glow_blend_mode = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pbi6g"]
+shader = ExtResource("2_87s4r")
+shader_parameter/size = 80
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cm0pq"]
+shader = ExtResource("2_p41he")
+shader_parameter/size = 200
+
+[node name="GlowDemo" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+position = Vector2(329, 233)
+texture = ExtResource("1_f5gsx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r0du0")
+
+[node name="Box" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Box"]
+material = SubResource("ShaderMaterial_pbi6g")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gaussian" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Gaussian"]
+material = SubResource("ShaderMaterial_cm0pq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

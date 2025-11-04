@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3 uid="uid://coi8axcx20sty"]
 
-[ext_resource type="Script" uid="uid://bxaut2praapl7" path="res://CharacterBody2d.cs" id="1_5um6x"]
-[ext_resource type="Script" uid="uid://b4g4xl4sjbn68" path="res://Grass.cs" id="1_cm0pq"]
-[ext_resource type="Texture2D" uid="uid://s46i7nhli13t" path="res://icon.svg" id="1_nu38a"]
-[ext_resource type="Texture2D" uid="uid://dhqeskrynqxcc" path="res://GrassTexture.png" id="2_qndc6"]
-[ext_resource type="Script" uid="uid://cjhq6ha7uuxf1" path="res://Grass2.cs" id="3_3dxm6"]
-[ext_resource type="Shader" uid="uid://hp5gyh8bm8xn" path="res://Main.gdshader" id="5_3dxm6"]
+[ext_resource type="Script" uid="uid://b4g4xl4sjbn68" path="res://Grass.cs" id="1_52wpk"]
+[ext_resource type="Texture2D" uid="uid://dhqeskrynqxcc" path="res://GrassTexture.png" id="2_6c66f"]
+[ext_resource type="Script" uid="uid://cjhq6ha7uuxf1" path="res://Grass2.cs" id="3_oyakm"]
+[ext_resource type="Shader" uid="uid://hp5gyh8bm8xn" path="res://GrassAnimation.gdshader" id="4_8qftg"]
+[ext_resource type="Script" uid="uid://bxaut2praapl7" path="res://CharacterBody2d.cs" id="5_d6rn4"]
+[ext_resource type="Texture2D" uid="uid://s46i7nhli13t" path="res://icon.svg" id="6_h7m4r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0oyg5"]
 size = Vector2(22, 13)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trn2v"]
-shader = ExtResource("5_3dxm6")
+shader = ExtResource("4_8qftg")
 shader_parameter/frameCount = Vector2(6, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_cm0pq"]
@@ -27,43 +27,43 @@ size = Vector2(160, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mxyc"]
 size = Vector2(12.6667, 12.6667)
 
-[node name="Main" type="Node2D"]
+[node name="GrassDemo" type="Node2D"]
 
 [node name="Grass" type="Area2D" parent="."]
-visible = false
 position = Vector2(109, 18)
 scale = Vector2(4, 4)
-script = ExtResource("1_cm0pq")
+script = ExtResource("1_52wpk")
 
 [node name="Grass" type="Sprite2D" parent="Grass"]
 position = Vector2(0, -5)
-texture = ExtResource("2_qndc6")
+texture = ExtResource("2_6c66f")
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grass"]
 shape = SubResource("RectangleShape2D_0oyg5")
 
 [node name="Grass2" type="Area2D" parent="."]
+visible = false
 scale = Vector2(4, 4)
-script = ExtResource("3_3dxm6")
+script = ExtResource("3_oyakm")
 
 [node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="Grass2"]
 material = SubResource("ShaderMaterial_trn2v")
 multimesh = SubResource("MultiMesh_fos0i")
-texture = ExtResource("2_qndc6")
+texture = ExtResource("2_6c66f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grass2"]
 shape = SubResource("RectangleShape2D_lgr22")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 scale = Vector2(3, 3)
-script = ExtResource("1_5um6x")
+script = ExtResource("5_d6rn4")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 
 [node name="Icon" type="Sprite2D" parent="CharacterBody2D"]
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_nu38a")
+texture = ExtResource("6_h7m4r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(-1.58946e-07, -1.58946e-07)
