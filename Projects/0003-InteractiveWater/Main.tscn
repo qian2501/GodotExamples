@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://cyyuejrdyjned"]
+
+[ext_resource type="Shader" uid="uid://dj54tyhwxjylx" path="res://Water.gdshader" id="1_cm0pq"]
+[ext_resource type="Shader" uid="uid://d3m7qlom2c705" path="res://Checker.gdshader" id="1_fos0i"]
+[ext_resource type="Texture2D" uid="uid://s46i7nhli13t" path="res://icon.svg" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://bxaut2praapl7" path="res://CharacterBody2d.cs" id="1_uu6xs"]
+[ext_resource type="Texture2D" uid="uid://b6k254126kywj" path="res://DepthMap.png" id="2_fos0i"]
+[ext_resource type="Shader" uid="uid://d0geh6u3e4oxt" path="res://Character.gdshader" id="4_3dxm6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lgr22"]
+shader = ExtResource("1_fos0i")
+shader_parameter/color1 = Color(0.860369, 0.860369, 0.860369, 1)
+shader_parameter/color2 = Color(0.41598, 0.41598, 0.41598, 1)
+shader_parameter/checker_size = 5.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_trn2v"]
+size = Vector2(640, 480)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3dxm6"]
+shader = ExtResource("1_cm0pq")
+shader_parameter/color1 = Color(0.6, 0.6, 1, 1)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/waveSize = 20.0
+shader_parameter/waveStrength = 4.0
+shader_parameter/waveSpeed = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trn2v"]
+shader = ExtResource("4_3dxm6")
+shader_parameter/depth_value = 0.5
+shader_parameter/tint_color = Color(0.6, 0.6, 1, 1)
+shader_parameter/line_width = 0.02
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/waveSize = 15.0
+shader_parameter/waveStrength = 2.0
+shader_parameter/waveSpeed = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu6xs"]
+size = Vector2(128, 126)
+
+[node name="InteractiveWaterDemo" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_lgr22")
+position = Vector2(320, 240)
+texture = SubResource("PlaceholderTexture2D_trn2v")
+
+[node name="DepthMap" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3dxm6")
+position = Vector2(320, 240)
+texture = ExtResource("2_fos0i")
+
+[node name="CharacterBody2d" type="CharacterBody2D" parent="."]
+position = Vector2(320, 240)
+script = ExtResource("1_uu6xs")
+
+[node name="Icon" type="Sprite2D" parent="CharacterBody2d"]
+material = SubResource("ShaderMaterial_trn2v")
+texture = ExtResource("1_glv2v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2d"]
+visible = false
+shape = SubResource("RectangleShape2D_uu6xs")
